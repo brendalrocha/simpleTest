@@ -39,7 +39,7 @@
                         <td><a href="index.php?product=show&id=<?php echo $product->getId(); ?>"><?= $product->getName(); ?></a></td>
                         <td><img src="<?php echo ($product->getImage() ? $product->getImage() : './assets/images/noimage.png') ?>" class="list-img" alt=""></td>
                         <td><?php echo '$'.$product->getPrice(); ?></td>
-                        <td><?php echo $product->getCategoryId(); ?></td>
+                        <td><?php echo $product->getCategoryName(); ?></td>
                         <td>
                             <a href="index.php?product=edit&id=<?= $product->getId(); ?>" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                             <a href="#" class="delete" data-value="<?= $product->getId() ?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

@@ -7,11 +7,12 @@ class ProductDAO extends DAO
 {
     public function selectAll()
     {
-        $sql = "SELECT * FROM products ORDER BY id";
+        $sql = "SELECT p.id, p.name, p.description, p.image, p.price, p.category_id, c.name as category_name
+                FROM products as p JOIN categories as c on p.category_id = c.id ORDER BY id";
         try {
             $stmt = $this->connection->prepare($sql);
             $stmt->execute();
-            $products = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Product', ['name', 'description', 'image', 'price', 'category_id', 'id']);
+            $products = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Product', ['name', 'description', 'image', 'price', 'category_id', 'category_name', 'id']);
             return $products;
         } catch (PDOException $e) {
             throw new PDOException($e);
@@ -77,6 +78,8 @@ class ProductDAO extends DAO
         $stmt->bindParam(':image', $productImage);
         $stmt->bindParam(':price', $productPrice);
         $stmt->bindParam(':category_id', $productCategory);
+
+        print_r($stmt);die;
 
         try {
             $stmt->execute();

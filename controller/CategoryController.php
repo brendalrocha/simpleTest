@@ -53,6 +53,30 @@ class CategoryController
         View::load('view/template/footer.html');
     }
 
+    public function store($data)
+    {
+        try {
+            $catDAO = new CategoryDAO();
+            $v = new Validator($data);
+            $v->rule('required', ['name', 'description']);
+            if ($v->validate()) {
+                $newCategory = new Category();
+                $newCategory->setName($data['name']);
+                $newCategory->setDescription($data['description']);
+                $catDAO->insert($newCategory);
+                header('location: index.php?category=index');
+            } else {
+                $this->data = [];
+                $this->data['errors'] = $this->handleValidationErrors($v->errors());
+                View::load('view/template/header.html');
+                View::load('view/category/create.php', $this->data);
+                View::load('view/template/footer.html');
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function edit($id)
     {
         $this->data = array();

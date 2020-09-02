@@ -43,6 +43,9 @@ if (isset($_GET['product'])) {
         case 'create':
             $cat->create();
             break;
+        case 'store':
+            $cat->store($_POST);
+            break;
         case 'edit':
             $cat->edit($_GET['id']);
             break;
